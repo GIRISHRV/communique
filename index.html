@@ -300,7 +300,7 @@ function fetchUserDataAndPosts() {
 function displayPost(post) {
     const postHTML = generatePostHTML(post.user, { title: post.title, body: post.content });
     const postsContainer = document.getElementById('postsContainer');
-    postsContainer.insertAdjacentHTML('afterbegin', postHTML); // Insert at the top
+    postsContainer.insertAdjacentHTML('beforeend', postHTML); // Insert at the top
 }
 
 function generatePostHTML(user, post) {
