@@ -384,36 +384,41 @@
             `;
         }
 
-        function fetchTrendingNews() {
-            const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+function fetchTrendingNews() {
+    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
 
-            const req = new Request(url);
+    const req = new Request(url);
 
-            fetch(req)
-                .then(response => response.json())
-                .then(data => {
-                    const newsContainer = document.getElementById('newsContainer');
-                    newsContainer.innerHTML = ''; // Clear existing content
-                    data.articles.forEach(article => {
-                        const articleHTML = generateArticleHTML(article);
-                        newsContainer.insertAdjacentHTML('beforeend', articleHTML);
-                    });
-                })
-                .catch(error => console.error('Error fetching news:', error));
-        }
+    fetch(req)
+        .then(response => response.json())
+        .then(data => {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = ''; // Clear existing content
 
-        function generateArticleHTML(article) {
-            const randomImageUrl = `https://picsum.photos/100?random=${Math.floor(Math.random() * 1000)}`;
-            const truncatedTitle = article.title.length > 50 ? article.title.substring(0, 47) + '...' : article.title;
-            return `
-                <div class="d-flex align-items-center mb-2 rounded border p-2">
-                    <img src="${randomImageUrl}" class="rounded border border-2 me-2" alt="News Image" width="40" height="40">
-                    <div>
-                        <h6 class="fw-bold mb-0 text-start">${truncatedTitle}</h6>
-                    </div>
-                </div>
-            `;
-        }
+            if (data.articles && Array.isArray(data.articles)) {
+                data.articles.forEach(article => {
+                    const articleHTML = generateArticleHTML(article);
+                    newsContainer.insertAdjacentHTML('beforeend', articleHTML);
+                });
+            } else {
+                console.error('No articles found in the response');
+            }
+        })
+        .catch(error => console.error('Error fetching news:', error));
+}
+
+function generateArticleHTML(article) {
+    const randomImageUrl = `https://picsum.photos/100?random=${Math.floor(Math.random() * 1000)}`;
+    const truncatedTitle = article.title.length > 50 ? article.title.substring(0, 47) + '...' : article.title;
+    return `
+        <div class="d-flex align-items-center mb-2 rounded border p-2">
+            <img src="${randomImageUrl}" class="rounded border border-2 me-2" alt="News Image" width="40" height="40">
+            <div>
+                <h6 class="fw-bold mb-0 text-start">${truncatedTitle}</h6>
+            </div>
+        </div>
+    `;
+}
 
         function fetchRecentActivity() {
             const activities = ['liked', 'commented on', 'shared'];
