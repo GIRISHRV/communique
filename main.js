@@ -288,4 +288,4 @@ function generateActivityHTML(user, activity, post) {
     `;
 }
 
-console.log("Executed")
+console.log("Executed");
