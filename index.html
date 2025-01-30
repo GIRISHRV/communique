@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark" style="height: 100vh;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .smooth-transition {
+          transition: background-color 0.2s, color 0.3s;
+        }
+        .sticky-sidebar {
+          position: -webkit-sticky;
+          position: sticky;
+          top: 20px; /* Adjust as needed */
+        }
+        /* Grow */
+        .hvr-grow {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            backface-visibility: hidden;
+            -moz-osx-font-smoothing: grayscale;
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+
+        .hvr-grow:hover,
+        .hvr-grow:focus,
+        .hvr-grow:active {
+            transform: scale(1.05);
+        }
+        
+    </style>
+    
+    <title>Communique</title>
+  </head>
+
+  <body class="smooth-transition">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md border border-3 px-2 py-2 m-3 rounded shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold">Communique</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <div class="d-flex justify-content-center mode-switch mt-1 border rounded border-1">
+                            <button title="Use dark mode" id="dark" class="btn btn-sm btn-default text-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="bi bi-moon"></i>
+                            </button>
+                            <button title="Use light mode" id="light" class="btn btn-sm btn-default text-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="bi bi-sun"></i>
+                            </button>
+                            <button title="Use system preferred mode" id="system" class="btn btn-sm btn-default text-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="bi bi-display"></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid h-100 py-2 px-5">
+        
+        <!-- Grid Layout -->
+        <div class="row h-100">
+
+            <!-- Left Sidebar -->
+            <div class="col-2 pe-4 d-none d-xl-block">
+                <div class="sticky-sidebar">
+                    <div class="card text-center border border-3 rounded mb-3 shadow">
+                        <div class="overflow-hidden" style="height: 80px;">
+                            <img class="border-bottom border-3 rounded" src="https://plus.unsplash.com/premium_photo-1701590725747-ac131d4dcffd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2Vic2l0ZSUyMGJhbm5lcnxlbnwwfHwwfHx8MA%3D%3D" class="card-img-top" alt="Cover Image" style="object-fit: cover; height: 100%; width: 100%;">
+                        </div>
+                        <div class="card-body">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4Ya8mK6Eo-X7B4cmkpnNjpEKij-TXXPUkg&s" class="rounded-circle border border-3 mx-auto d-block" alt="Profile" width="90" height="90">
+                            <h5 class="mt-3 fw-bold" id="username">John Doe</h5>
+                            <p class="text-muted">Hello There! Glad to meet ya!</p>
+                        </div>
+                    </div>
+                    <div class="card text-center border border-3 rounded mb-3 shadow">
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                            <h5 class="mt-3 fw-bold">Recent Activity</h5>
+                            <div id="recentActivity"></div>
+                        </div>
+                    </div>
+                    <div class="container-fluid text-center mb-3">
+                        <div class="links">
+                            <a class="me-3 text-decoration-none">About</a>
+                            <a class="me-3 text-decoration-none">Settings</a>
+                            <a class="me-3 text-decoration-none">Help</a>
+                            <a class="me-3 text-decoration-none">T&C</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-12 col-md hero">
+                <div class="container-fluid border border-3 rounded mb-3 py-3 px-3 shadow">
+                    <form id="postForm">
+                        <div class="form-group py-2">
+                            <textarea class="form-control" id="postTitle" rows="1" placeholder="Title" style="resize: none;"></textarea>
+                        </div>
+                        <div class="form-group py-2">
+                            <textarea class="form-control" id="postContent" rows="4" placeholder="What's on your mind?" style="resize: none;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Post</button>
+                    </form>
+                </div>
+                
+                <!-- Dynamic User Posts go here -->
+                <div id="postsContainer"></div>
+                <div class="posts-scroll-anchor"></div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-2 ps-4 d-none d-xl-block">
+                <div class="sticky-sidebar">
+                    <div class="card text-center border border-3 rounded mb-3 shadow">
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                            <h5 class="mt-3 fw-bold">People you may know</h5>
+                            <div id="peopleYouMayKnow"></div>
+                        </div>
+                    </div>
+                    <div class="card text-center border border-3 rounded mb-3 shadow">
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                            <h5 class="mt-3 fw-bold">Trending News</h5>
+                            <div id="newsContainer" class="text-start"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="scroll-anchor"></div>
+        
+    </div>
+
+    <!-- Back to top button -->
+    <button type="button" class="btn btn-outline-success rounded-circle btn-floating btn-lg" id="btn-back-to-top" style="position: fixed;bottom: 20px;right: 20px;display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
